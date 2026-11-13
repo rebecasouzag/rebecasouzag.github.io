@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rebeca · Ciência da Computação na UFCG</title>
+  <meta name="description" content="Portfólio da Rebeca, estudante de Ciência da Computação na UFCG. Uso tecnologia, educação e representação para facilitar a vida das pessoas.">
+  <meta name="theme-color" content="#F7ECE2">
+  <meta property="og:title" content="Rebeca · Ciência da Computação na UFCG">
+  <meta property="og:description" content="Uso tecnologia, educação e representação para facilitar a vida das pessoas.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/rebeca/rosto-neutro.webp" type="image/webp">
+  <link rel="preload" href="assets/fontes/shantell-sans-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fontes/atkinson-hyperlegible-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/rebeca/caminhada.webp" as="image" type="image/webp">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="pular" href="#comeco">Pular para a história</a>
+
+<!-- Mini-mapa de progresso: decorativo, o progresso real é a própria rolagem -->
+<header class="mapa" aria-hidden="true">
+  <span class="mapa__cidade">Floriano, PI</span>
+  <span class="mapa__trilho"><span class="mapa__ponto" id="mapa-ponto"></span></span>
+  <span class="mapa__cidade">Campina Grande, PB</span>
+</header>
+
+<!-- A Rebeca que caminha (fixa na tela; o JS move e troca os quadros) -->
+<div class="andarilha" id="andarilha">
+  <p class="reacao" id="reacao" aria-live="polite" hidden>
+    <img class="avatar reacao__rosto" id="reacao-rosto" src="assets/rebeca/rosto-piscadinha.webp" width="56" height="56" alt="">
+    <span class="balao balao--reacao" id="reacao-texto"></span>
+  </p>
+  <button class="rebeca" id="rebeca" type="button" aria-label="Rebeca. Clique para uma reação">
+    <span class="rebeca__corpo" id="rebeca-corpo">
+      <span class="rebeca__janela">
+        <img class="rebeca__sprite" id="rebeca-sprite" src="assets/rebeca/caminhada.webp" width="1260" height="288" alt="" decoding="async" fetchpriority="high">
+      </span>
+      <img class="rebeca__alt rebeca__mala" src="assets/rebeca/mudanca-mala.webp" width="261" height="312" alt="" loading="lazy" decoding="async">
+      <img class="rebeca__alt rebeca__costas" src="assets/rebeca/costas.webp" width="211" height="289" alt="" loading="lazy" decoding="async">
+    </span>
+  </button>
+</div>
+
+<svg class="trilha" id="trilha" aria-hidden="true" focusable="false">
+  <path id="trilha-caminho" d=""></path>
+</svg>
+
+<main id="historia">
+
+  <!-- 0 · Abertura -->
+  <section class="capitulo capitulo--abertura" id="comeco" data-cena="0">
+    <article class="quadrinho quadrinho--dir quadrinho--abertura" data-rosto="neutro">
+      <span class="rebeca-estatica" aria-hidden="true">
+        <img src="assets/rebeca/caminhada.webp" width="1260" height="288" alt="" decoding="async">
+      </span>
+      <div class="dialogo">
+        <img class="avatar" src="assets/rebeca/rosto-neutro.webp" width="56" height="56" alt="Rebeca com expressão neutra, olhando para a frente">
+        <p class="balao" tabindex="0" title="Clique ou pressione Enter para pular a digitação"><span class="balao__texto">Oi! Eu sou a Rebeca 💜</span></p>
+      </div>
+      <h1>Estudo Ciência da Computação na UFCG e uso tecnologia pra facilitar a vida das pessoas.</h1>
+      <p class="dica"><span class="dica__seta" aria-hidden="true">↓</span> Role a página e vem comigo.</p>
+    </article>
+  </section>
+
+  <!-- 1 · Onde tudo começou (duas paradas) -->
+  <section class="capitulo" id="onde-tudo-comecou" data-cena="1">
+    <article class="quadrinho quadrinho--esq" data-rosto="piscadinha">
+      <figure class="pose">
+        <img src="assets/rebeca/ifpi-formatura.webp" width="235" height="319" alt="Rebeca de beca e capelo azuis, segurando o diploma do IFPI e sorrindo de olhos fechados" loading="lazy" decoding="async">
+      </figure>
+      <div class="dialogo">
+        <img class="avatar" src="assets/rebeca/rosto-piscadinha.webp" width="56" height="56" alt="Rebeca dando uma piscadinha">
+        <p class="balao" tabindex="0"><span class="balao__texto">Tudo começou em Floriano, no Piauí.</span></p>
+      </div>
+      <h2>Onde tudo começou</h2>
+      <p>Fiz o técnico em informática integrado ao ensino médio no <strong>IFPI, campus Floriano</strong>, e me formei em 2021.</p>
+    </article>
+
+    <article class="quadrinho quadrinho--dir" data-rosto="piscadinha">
+      <figure class="pose">
+        <img src="assets/rebeca/gremio-microfone.webp" width="257" height="292" alt="Rebeca falando ao microfone, com a mão levantada, como presidente do grêmio estudantil" loading="lazy" decoding="async">
+      </figure>
+      <div class="dialogo">
+        <img class="avatar" src="assets/rebeca/rosto-piscadinha.webp" width="56" height="56" alt="Rebeca dando uma piscadinha">
+        <p class="balao" tabindex="0"><span class="balao__texto">Foi lá que percebi que gosto de me envolver.</span></p>
+      </div>
+      <p>Participei de várias atividades extracurriculares e fui <strong>presidente do grêmio estudantil</strong>.</p>
+    </article>
+  </section>
+
+  <!-- 2 · Primeiro trabalho -->
+  <section class="capitulo" id="primeiro-trabalho" data-cena="2">
+    <article class="quadrinho quadrinho--esq" data-rosto="neutro">
+      <figure class="pose">
+        <img src="assets/rebeca/jovem-aprendiz.webp" width="236" height="305" alt="Rebeca com crachá e camisa social, no primeiro trabalho como jovem aprendiz" loading="lazy" decoding="async">
+      </figure>
+      <div class="dialogo">
+        <img class="avatar" src="assets/rebeca/rosto-neutro.webp" width="56" height="56" alt="Rebeca com expressão neutra">
+        <p class="balao" tabindex="0"><span class="balao__texto">Depois do técnico, fui trabalhar.</span></p>
+      </div>
+      <h2>Primeiro trabalho</h2>
+      <p>Entre 2021 e 2024 trabalhei como <strong>jovem aprendiz</strong>. <mark class="todo">[PREENCHER (opcional): onde e o que aprendi]</mark></p>
+    </article>
+  </section>
+
+  <!-- 3 · A mudança (a Rebeca que caminha vira a pose da mala) -->
+  <section class="capitulo" id="a-mudanca" data-cena="3" data-modo="mala">
+    <article class="quadrinho quadrinho--dir" data-rosto="rindo">
+      <figure class="pose pose--so-sem-movimento">
+        <img src="assets/rebeca/mudanca-mala.webp" width="261" height="312" alt="Rebeca andando com mochila e puxando uma mala roxa de rodinhas" loading="lazy" decoding="async">
+      </figure>
+      <div class="dialogo">
+        <img class="avatar" src="assets/rebeca/rosto-rindo.webp" width="56" height="56" alt="Rebeca rindo">
+        <p class="balao" tabindex="0"><span class="balao__texto">Em 2024 arrumei as malas e vim pra Paraíba.</span></p>
+      </div>
+      <h2>A mudança</h2>
+      <p>Entrei em <strong>Ciência da Computação na UFCG</strong>, em Campina Grande. Hoje estou no 6º período.</p>
+      <p class="rota" aria-label="Trajeto de Floriano, Piauí, para Campina Grande, Paraíba"><span>Floriano, PI</span><span class="rota__linha" aria-hidden="true"></span><span>Campina Grande, PB</span></p>
+    </article>
+  </section>
+
+  <!-- 4 · Ensinar (duas paradas) -->
+  <section class="capitulo" id="ensinar" data-cena="4">
+    <article class="quadrinho quadrinho--esq" data-rosto="neutro">
+      <figure class="pose">
+        <img src="assets/rebeca/monitoria-quadro.webp" width="313" height="280" alt="Rebeca em frente a um quadro com fórmulas, explicando como monitora" loading="lazy" decoding="async">
+      </figure>
+      <div class="dialogo">
+        <img class="avatar" src="assets/rebeca/rosto-neutro.webp" width="56" height="56" alt="Rebeca com expressão neutra">
+        <p class="balao" tabindex="0"><span class="balao__texto">No 3º período fui monitora de Fundamentos da Matemática para Computação.</span></p>
+      </div>
+      <h2>Ensinar</h2>
+    </article>
+
+    <article class="quadrinho quadrinho--dir" data-rosto="piscadinha">
+      <figure class="pose">
+        <img src="assets/rebeca/letramento-idosa.webp" width="329" height="266" alt="Rebeca sentada no chão ao lado de uma senhora de cabelos brancos, mostrando algo no celular" loading="lazy" decoding="async">
+      </figure>
+      <div class="dialogo">
+        <img class="avatar" src="assets/rebeca/rosto-piscadinha.webp" width="56" height="56" alt="Rebeca dando uma piscadinha">
+        <p class="balao" tabindex="0"><span class="balao__texto">Também fui voluntária no programa de letramento digital para idosos.</span></p>
+      </div>
+      <p><strong>Educação e inclusão digital</strong> são duas das coisas que mais me movem.</p>
+    </article>
+  </section>
+
+  <!-- 5 · Pesquisar -->
+  <section class="capitulo" id="pesquisar" data-cena="5">
+    <article class="quadrinho quadrinho--esq" data-rosto="pensando">
+      <figure class="pose">
+        <img src="assets/rebeca/pesquisa-ia.webp" width="265" height="283" alt="Rebeca em frente a uma tela com ícones de inteligência artificial, pesquisando" loading="lazy" decoding="async">
+      </figure>
+      <div class="dialogo">
+        <img class="avatar" src="assets/rebeca/rosto-pensando.webp" width="56" height="56" alt="Rebeca pensativa, com a mão no queixo">
+        <p class="balao" tabindex="0"><span class="balao__texto">Pesquisa com IA virou parte da minha rotina.</span></p>
+      </div>
+      <h2>Pesquisar</h2>
+      <p>Fui voluntária por 3 meses numa iniciação científica sobre o uso de IA na geração de laudos <mark class="todo">[PREENCHER: tipo de laudo]</mark>. Hoje faço parte do <strong>AvaliAi</strong>, um projeto de pesquisa que desenvolve uma plataforma para avaliar o impacto de projetos sociais usando IA. <mark class="todo">[PREENCHER: meu papel e tecnologias]</mark></p>
+    </article>
+  </section>
+
+  <!-- 6 · Representar -->
+  <section class="capitulo" id="representar" data-cena="6">
+    <article class="quadrinho quadrinho--dir" data-rosto="rindo">
+      <figure class="pose">
+        <img src="assets/rebeca/caesi-megafone.webp" width="291" height="291" alt="Rebeca falando num megafone, representando os estudantes no CAESI" loading="lazy" decoding="async">
+      </figure>
+      <div class="dialogo">
+        <img class="avatar" src="assets/rebeca/rosto-rindo.webp" width="56" height="56" alt="Rebeca rindo">
+        <p class="balao" tabindex="0"><span class="balao__texto">Em 2025 entrei no CAESI.</span></p>
+      </div>
+      <h2>Representar</h2>
+      <p>No <strong>centro acadêmico do curso</strong> atuo ativamente na representação dos estudantes de Computação.</p>
+    </article>
+  </section>
+
+  <!-- 7 · Construir: caesi-help -->
+  <section class="capitulo" id="caesi-help" data-cena="7">
+    <article class="quadrinho quadrinho--esq quadrinho--largo" data-rosto="surpresa" data-rosto-depois="neutro">
+      <figure class="pose">
+        <img src="assets/rebeca/caesi-help-chat.webp" width="342" height="289" alt="Rebeca apontando para um balão de chat, um ponto de interrogação e um ícone de confirmação" loading="lazy" decoding="async">
+      </figure>
+      <div class="dialogo">
+        <img class="avatar" src="assets/rebeca/rosto-surpresa.webp" width="56" height="56" alt="Rebeca surpresa, de boca aberta">
+        <p class="balao" tabindex="0"><span class="balao__texto">Toda semana chegam muitas dúvidas pra mim.</span></p>
+      </div>
+      <h2>Construir: caesi-help</h2>
+      <p>Como representante, recebo perguntas sobre vários processos do curso, e a resposta nem sempre é fácil de achar. Por isso comecei o <strong>caesi-help</strong>: um chat que responde com base nos documentos do curso e em tudo o que eu sei, para ajudar mais estudantes e diminuir o trabalho repetitivo. <mark class="todo">[PREENCHER: estágio do projeto, tecnologias, link]</mark></p>
+
+      <div class="chat" id="chat" aria-label="Demonstração do caesi-help">
+        <div class="chat__topo">
+          <span class="chat__nome">caesi-help</span>
+          <span class="chat__aviso">demonstração com respostas pré-escritas, sem IA de verdade aqui</span>
+        </div>
+        <div class="chat__mensagens" id="chat-mensagens" aria-live="polite">
+          <p class="msg msg--bot">Oi! Sou o caesi-help. Escolha uma pergunta aí embaixo 👇</p>
+        </div>
+        <div class="chat__perguntas" id="chat-perguntas" role="group" aria-label="Perguntas prontas"></div>
+      </div>
+    </article>
+  </section>
+
+  <!-- 8 · Projetos -->
+  <section class="capitulo" id="projetos" data-cena="8">
+    <article class="quadrinho quadrinho--dir quadrinho--largo" data-rosto="piscadinha">
+      <figure class="pose">
+        <img src="assets/rebeca/apontando-tela.webp" width="314" height="419" alt="Rebeca segurando um notebook e apontando para uma janela de código flutuante" loading="lazy" decoding="async">
+      </figure>
+      <div class="dialogo">
+        <img class="avatar" src="assets/rebeca/rosto-piscadinha.webp" width="56" height="56" alt="Rebeca dando uma piscadinha">
+        <p class="balao" tabindex="0"><span class="balao__texto">Algumas coisas que estou construindo.</span></p>
+      </div>
+      <h2>Projetos</h2>
+
+      <ul class="cartoes">
+        <li class="cartao">
+          <h3>caesi-help</h3>
+          <p><strong>Problema:</strong> dúvidas repetidas sobre processos do curso que chegam toda semana aos representantes.</p>
+          <p><strong>Meu papel:</strong> idealizadora e desenvolvedora.</p>
+          <p><strong>Tecnologias:</strong> <mark class="todo">[PREENCHER: tecnologias]</mark></p>
+          <p class="cartao__links"><a href="#caesi-help">Ver a demo acima</a> · <mark class="todo">[PREENCHER: link do código]</mark></p>
+        </li>
+        <li class="cartao">
+          <h3>AvaliAi</h3>
+          <p><strong>Problema:</strong> avaliar o impacto de projetos sociais dá trabalho e depende de muita análise manual.</p>
+          <p><strong>Meu papel:</strong> <mark class="todo">[PREENCHER: meu papel]</mark></p>
+          <p><strong>Tecnologias:</strong> <mark class="todo">[PREENCHER: tecnologias]</mark></p>
+          <p class="cartao__links"><mark class="todo">[PREENCHER: links de código/demo]</mark></p>
+        </li>
+        <li class="cartao cartao--vazio">
+          <h3><mark class="todo">[PREENCHER: outro projeto]</mark></h3>
+          <p>Problema que resolve, meu papel, tecnologias e links.</p>
+        </li>
+      </ul>
+      <figure class="pose pose--canto">
+        <img src="assets/rebeca/notebook-sentada.webp" width="283" height="415" alt="Rebeca sentada no chão, de pernas cruzadas, programando no notebook" loading="lazy" decoding="async">
+      </figure>
+    </article>
+  </section>
+
+  <!-- 9 · Fora do código -->
+  <section class="capitulo" id="fora-do-codigo" data-cena="9">
+    <article class="quadrinho quadrinho--esq quadrinho--largo" data-rosto="piscadinha">
+      <div class="duas-poses">
+        <button class="pose pose--volei" id="volei" type="button" aria-label="Rebeca com uniforme de vôlei camisa 7 e a bola na mão. Ative para a bola dar um pulinho">
+          <img src="assets/rebeca/volei.webp" width="264" height="478" alt="" loading="lazy" decoding="async">
+        </button>
+        <figure class="pose">
+          <img src="assets/rebeca/fone-musica.webp" width="278" height="406" alt="Rebeca de fone de ouvido, dançando e ouvindo música" loading="lazy" decoding="async">
+        </figure>
+      </div>
+      <div class="dialogo">
+        <img class="avatar" src="assets/rebeca/rosto-piscadinha.webp" width="56" height="56" alt="Rebeca dando uma piscadinha">
+        <p class="balao" tabindex="0"><span class="balao__texto">Fora da tela, sou apaixonada por vôlei.</span></p>
+      </div>
+      <h2>Fora do código</h2>
+      <p><mark class="todo">[PREENCHER: onde jogo, posição, por que o 7]</mark></p>
+      <p><strong>Música:</strong> <mark class="todo">[PREENCHER (opcional): o que gosto de ouvir]</mark></p>
+    </article>
+  </section>
+
+  <!-- 10 · Próximos capítulos (a Rebeca vai embora de costas) -->
+  <section class="capitulo" id="proximos-capitulos" data-cena="10" data-modo="costas">
+    <article class="quadrinho quadrinho--dir" data-rosto="pensando">
+      <figure class="pose pose--rosto">
+        <img src="assets/rebeca/rosto-mao-no-rosto.webp" width="160" height="132" alt="Rebeca com a mão no rosto, pensativa" loading="lazy" decoding="async">
+      </figure>
+      <div class="dialogo">
+        <img class="avatar" src="assets/rebeca/rosto-pensando.webp" width="56" height="56" alt="Rebeca pensativa, com a mão no queixo">
+        <p class="balao" tabindex="0"><span class="balao__texto">E agora?</span></p>
+      </div>
+      <h2>Próximos capítulos</h2>
+      <ul class="lista-sonhos">
+        <li>Fazer mestrado em <mark class="todo">[PREENCHER: área]</mark></li>
+        <li>Seguir trabalhando com educação e inclusão digital</li>
+        <li><mark class="todo">[PREENCHER: outro sonho]</mark></li>
+      </ul>
+      <figure class="pose pose--canto pose--canto-baixo">
+        <img src="assets/rebeca/livros-mochila.webp" width="228" height="444" alt="Rebeca de mochila, carregando uma pilha de livros" loading="lazy" decoding="async">
+      </figure>
+      <figure class="pose pose--so-sem-movimento">
+        <img src="assets/rebeca/costas.webp" width="211" height="289" alt="Rebeca de costas, indo embora de mochila e deixando um coração no ar" loading="lazy" decoding="async">
+      </figure>
+    </article>
+  </section>
+
+  <!-- 11 · Contato -->
+  <section class="capitulo capitulo--contato" id="contato" data-cena="11" data-modo="sumiu">
+    <article class="quadrinho quadrinho--esq quadrinho--largo" data-rosto="rindo">
+      <figure class="pose">
+        <img src="assets/rebeca/comemorando.webp" width="198" height="304" alt="Rebeca pulando de braços abertos, comemorando" loading="lazy" decoding="async">
+      </figure>
+      <div class="dialogo">
+        <img class="avatar" src="assets/rebeca/rosto-rindo.webp" width="56" height="56" alt="Rebeca rindo">
+        <p class="balao" tabindex="0"><span class="balao__texto">Vamos conversar?</span></p>
+      </div>
+      <h2>Contato</h2>
+      <p>Estou aberta a <strong>estágios, pesquisa e projetos com impacto social</strong>.</p>
+      <p class="botoes">
+        <a class="botao" href="#contato" data-todo="e-mail">E-mail <mark class="todo">[PREENCHER]</mark></a>
+        <a class="botao" href="#contato" data-todo="linkedin">LinkedIn <mark class="todo">[PREENCHER]</mark></a>
+        <a class="botao" href="https://github.com/rebecasouzag" rel="me">GitHub</a>
+      </p>
+    </article>
+  </section>
+
+  <footer class="rodape">
+    <p>Feito à mão com HTML, CSS e JavaScript, sem framework. Piauí ♥ Paraíba.</p>
+  </footer>
+</main>
+
+<script src="js/reacoes.js" defer></script>
+<script src="js/caesi-demo.js" defer></script>
+<script src="js/main.js" defer></script>
+</body>
+</html>
