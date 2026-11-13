@@ -24,7 +24,7 @@
   var secCostas = $('[data-modo="costas"]');
 
   var QUADROS = 7;          // quadros no sprite
-  var PX_POR_QUADRO = 28;   // pixels rolados por quadro
+  var PX_POR_QUADRO = 22;   // pixels rolados por quadro
   var QUADRO_PARADO = 0;    // quadro "de pé"
   var ALTURA_REBECA = 0.55; // posição vertical da Rebeca na tela (fração da altura)
   var VELOCIDADE = 30;      // ms por caractere nos balões
@@ -126,7 +126,7 @@
     trilha.style.height = alturaDoc + "px";
 
     if (mqMovel.matches) {
-      var xm = 32;
+      var xm = 38;
       caminho.setAttribute("d", "M" + xm + " 0 V" + alturaDoc);
       amostrasX = [xm, xm];
       amostrasY = [0, alturaDoc];
@@ -190,6 +190,10 @@
 
   var ultimoY = window.scrollY, pedido = false, timerParada;
   var rolando = false, quadroAtual = -1, modoAtual = "";
+  var distancia = 0;      // distância total rolada (alvo dos passos)
+  var fase = 0;           // distância "andada" pela Rebeca, persegue o alvo com suavidade
+  var xAtual = null;      // posição horizontal suavizada
+  var direcao = 1;        // 1 = olhando para a direita, -1 = para a esquerda
 
   function agendar() {
     if (!pedido) { pedido = true; requestAnimationFrame(atualizar); }
@@ -201,6 +205,12 @@
     return clamp((vh * ALTURA_REBECA - r.bottom) / alcance, 0, 1);
   }
 
+  function olhar(d) {
+    if (d === direcao) return;
+    direcao = d;
+    andarilha.classList.toggle("andarilha--voltando", d < 0);
+  }
+
   function atualizar() {
     pedido = false;
     var y = window.scrollY;
@@ -210,23 +220,49 @@
     atualizarMapa(y);
     if (reduzido) return;
 
-    if (delta !== 0) andarilha.classList.toggle("andarilha--voltando", delta < 0);
+    var continuar = false;
 
-    // Posição horizontal ao longo do caminho
-    var x = xNoCaminho(y + vh * ALTURA_REBECA);
-    andarilha.style.setProperty("--x", (x - largRebeca / 2).toFixed(1) + "px");
+    // Passos: avançam pela distância rolada (nos dois sentidos), sem depender do tempo.
+    distancia += Math.abs(delta);
+    if (distancia - fase > PX_POR_QUADRO * QUADROS) fase = distancia - PX_POR_QUADRO * QUADROS;
+    fase += (distancia - fase) * 0.25;
+    if (distancia - fase < 0.5) fase = distancia; else continuar = true;
 
-    // Quadro da caminhada: avança com a distância rolada; para ao chegar num capítulo
-    var parada = ativo !== null || !rolando;
-    var quadro = parada ? QUADRO_PARADO : Math.floor(y / PX_POR_QUADRO) % QUADROS;
+    // Posição horizontal ao longo do caminho, com um leve atraso para não "teletransportar"
+    var yRebeca = y + vh * ALTURA_REBECA;
+    var alvoX = xNoCaminho(yRebeca) - largRebeca / 2;
+    if (xAtual === null) xAtual = alvoX;
+    var xAntes = xAtual;
+    xAtual += (alvoX - xAtual) * 0.2;
+    if (Math.abs(alvoX - xAtual) < 0.3) xAtual = alvoX; else continuar = true;
+    if (fase === distancia && Math.abs(xAtual - xAntes) > 0.5) { distancia += Math.abs(xAtual - xAntes); continuar = true; }
+    andarilha.style.setProperty("--x", xAtual.toFixed(1) + "px");
+
+    // Ela anda enquanto se desloca e para de pé quando a rolagem termina
+    var andando = fase !== distancia || Math.abs(alvoX - xAtual) > 2;
+
+    // Para onde olhar
+    var dx = xAtual - xAntes;
+    if (Math.abs(dx) > 0.4) {
+      olhar(dx > 0 ? 1 : -1);
+    } else if (!andando && ativo && !mqMovel.matches) {
+      olhar(ativo.classList.contains("quadrinho--esq") ? -1 : 1); // de frente para o quadrinho
+    } else if (delta !== 0) {
+      olhar(delta < 0 ? -1 : 1);
+    }
+
+    // Quadro do sprite e um balanço sutil a cada passo
+    var ciclo = fase / (PX_POR_QUADRO * QUADROS);
+    var quadro = andando ? Math.floor(fase / PX_POR_QUADRO) % QUADROS : QUADRO_PARADO;
     if (quadro !== quadroAtual) {
       quadroAtual = quadro;
       sprite.style.setProperty("--quadro", quadro);
     }
+    var bob = andando ? -Math.abs(Math.sin(ciclo * Math.PI * 2)) * 3 : 0;
+    andarilha.style.setProperty("--bob", bob.toFixed(2) + "px");
 
     // Modos especiais: mala (cena 3), costas (fim da cena 10), sumiu (contato)
     var modo = "";
-    var yRebeca = y + vh * ALTURA_REBECA;
     if (secMala) {
       var rm = secMala.getBoundingClientRect();
       var topo = rm.top + y, base = rm.bottom + y;
@@ -257,6 +293,8 @@
       andarilha.classList.toggle("andarilha--escondida", modo === "sumiu");
       rebeca.tabIndex = modo === "sumiu" ? -1 : 0;
     }
+
+    if (continuar) agendar();
   }
 
   /* ---------------- Mini-mapa: Floriano → Campina Grande ---------------- */

@@ -7,19 +7,19 @@
   var PERGUNTAS = [
     {
       pergunta: "Como faço pra trancar uma disciplina?",
-      resposta: "[PREENCHER: resposta sobre trancamento de disciplina, prazos e onde pedir]"
+      resposta: "Os prazos mudam a cada semestre. Confira o calendário acadêmico da UFCG e, na dúvida, fale com a coordenação do curso."
     },
     {
       pergunta: "Quando abre a matrícula?",
-      resposta: "[PREENCHER: resposta sobre o período de matrícula e onde acompanhar o calendário]"
+      resposta: "As datas saem no calendário acadêmico do semestre. Vale ficar de olho nos avisos da coordenação e do CAESI."
     },
     {
       pergunta: "Como aproveito horas complementares?",
-      resposta: "[PREENCHER: resposta sobre como registrar e aproveitar horas complementares]"
+      resposta: "As regras estão nos documentos do curso. Guarde os certificados e confira com a coordenação o que conta como hora complementar."
     },
     {
       pergunta: "Quem procuro pra pedir dispensa de disciplina?",
-      resposta: "[PREENCHER: resposta sobre dispensa de disciplina e quem procurar]"
+      resposta: "Comece pela coordenação do curso, que explica o processo e os documentos necessários."
     }
   ];
 

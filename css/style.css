@@ -176,6 +176,7 @@ mark.todo {
 
 .rebeca__janela {
   display: block;
+  transform: translateY(var(--bob, 0px));
   width: var(--celula);
   height: calc(var(--celula) * 1.6);
   overflow: hidden;
@@ -285,8 +286,14 @@ main {
 
 /* Quadrinhos ainda não visitados ficam "apagados" (só com JS) */
 .js .quadrinho:not(.quadrinho--abertura):not(.quadrinho--visto) {
-  opacity: .55;
   transform: scale(.96);
+}
+.js .quadrinho--visto:not(.quadrinho--abertura) {
+  animation: acende .45s cubic-bezier(.2, .8, .3, 1.2);
+}
+@keyframes acende {
+  from { opacity: .4; transform: scale(.94); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
 /* ---------- Diálogo: avatar + balão ---------- */
@@ -518,7 +525,8 @@ main {
   body { font-size: 1rem; }
   .mapa { gap: .5rem; font-size: .75rem; }
 
-  main { padding-left: 64px; }
+  main { padding-left: 74px; }
+  .rebeca__alt { height: calc(var(--celula) * 1.45); }
   .capitulo { padding: 3.5rem 0; }
   .capitulo--abertura { min-height: calc(100svh - var(--mapa-altura)); }
 
@@ -538,6 +546,7 @@ main {
   .pose img, .quadrinho--largo .pose img { height: 150px; margin: 0 auto; }
   .pose--rosto img { height: 100px; }
   .pose--canto img { height: 120px; }
+  .pose--so-sem-movimento { display: none; }
   .duas-poses { float: none; justify-content: center; margin: 0 0 .8rem; }
   .duas-poses .pose img { height: 170px; }
 
