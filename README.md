@@ -4,16 +4,7 @@ Meu portfólio: a história por trás dos projetos, contada em uma narrativa por
 
 Será publicado em **https://rebecasouzag.github.io** pelo GitHub Pages.
 
-## Estado atual
-
-O site ainda não existe. Estamos na fase de **roteiro**: entrevistas que viram os capítulos da história.
-
-| Pasta / arquivo | Para que serve |
-|---|---|
-| `roteiro/entrevista.md` | Perguntas, organizadas por capítulo |
-| `roteiro/respostas/` | Uma nota por sessão de entrevista |
-| `roteiro/capitulos.md` | Esboço dos capítulos, montado a partir das respostas |
-| `roteiro/decisoes.md` | O que entra no site e o que fica de fora |
+Em construção.
 
 ## Próximas etapas
 
