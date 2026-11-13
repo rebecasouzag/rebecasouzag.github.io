@@ -1,4 +1,4 @@
-// Portfólio da Rebeca · caminhada ligada ao scroll, cenas, balões, mini-mapa.
+// Portfólio da Rebeca · caminhada ligada ao scroll, cenas e balões.
 // Todo o texto está no HTML; este arquivo só cuida do movimento.
 (function () {
   "use strict";
@@ -15,7 +15,6 @@
   var andarilha = $("#andarilha");
   var sprite = $("#rebeca-sprite");
   var rebeca = $("#rebeca");
-  var mapaPonto = $("#mapa-ponto");
   var trilha = $("#trilha");
   var caminho = $("#trilha-caminho");
   var principal = $("main");
@@ -26,7 +25,7 @@
   var QUADROS = 7;          // quadros no sprite
   var PX_POR_QUADRO = 22;   // pixels rolados por quadro
   var QUADRO_PARADO = 0;    // quadro "de pé"
-  var ALTURA_REBECA = 0.55; // posição vertical da Rebeca na tela (fração da altura)
+  var ALTURA_REBECA = 0.64; // altura dos pés da Rebeca na tela (fração da altura)
   var VELOCIDADE = 30;      // ms por caractere nos balões
 
   var ROSTO_ALT = {
@@ -119,7 +118,7 @@
   function construirTrilha() {
     vh = window.innerHeight;
     alturaDoc = html.scrollHeight;
-    if (reduzido) return; // sem caminhada: só o mini-mapa usa estas medidas
+    if (reduzido) return; // sem caminhada
     largRebeca = andarilha.offsetWidth;
     trilha.setAttribute("width", window.innerWidth);
     trilha.setAttribute("height", alturaDoc);
@@ -154,8 +153,8 @@
     for (var i = 0; i < pontos.length; i++) {
       var p = pontos[i];
       if (i > 0 && pontos[i - 1][0] !== p[0]) {
-        var meio = (pontos[i - 1][1] + p[1]) / 2;
-        d += " C" + pontos[i - 1][0] + " " + meio + " " + p[0] + " " + meio + " " + p[0] + " " + p[1];
+        var y1 = pontos[i - 1][1], y2 = p[1], k = (y2 - y1) * 0.62;
+        d += " C" + pontos[i - 1][0] + " " + (y1 + k) + " " + p[0] + " " + (y2 - k) + " " + p[0] + " " + y2;
       } else {
         d += " L" + p[0] + " " + p[1];
       }
@@ -217,32 +216,28 @@
     var delta = y - ultimoY;
     ultimoY = y;
 
-    atualizarMapa(y);
     if (reduzido) return;
 
     var continuar = false;
 
-    // Passos: avançam pela distância rolada (nos dois sentidos), sem depender do tempo.
-    distancia += Math.abs(delta);
+    // Posição exata sobre a linha tracejada: os pés seguem o caminho
+    var yRebeca = y + vh * ALTURA_REBECA;
+    var xNovo = xNoCaminho(yRebeca) - largRebeca / 2;
+    var dx = xAtual === null ? 0 : xNovo - xAtual;
+    xAtual = xNovo;
+    andarilha.style.setProperty("--x", xAtual.toFixed(1) + "px");
+
+    // Passos: avançam pelo comprimento percorrido no caminho (vertical + horizontal),
+    // nos dois sentidos, sem depender do tempo.
+    distancia += Math.sqrt(delta * delta + dx * dx);
     if (distancia - fase > PX_POR_QUADRO * QUADROS) fase = distancia - PX_POR_QUADRO * QUADROS;
     fase += (distancia - fase) * 0.25;
     if (distancia - fase < 0.5) fase = distancia; else continuar = true;
 
-    // Posição horizontal ao longo do caminho, com um leve atraso para não "teletransportar"
-    var yRebeca = y + vh * ALTURA_REBECA;
-    var alvoX = xNoCaminho(yRebeca) - largRebeca / 2;
-    if (xAtual === null) xAtual = alvoX;
-    var xAntes = xAtual;
-    xAtual += (alvoX - xAtual) * 0.2;
-    if (Math.abs(alvoX - xAtual) < 0.3) xAtual = alvoX; else continuar = true;
-    if (fase === distancia && Math.abs(xAtual - xAntes) > 0.5) { distancia += Math.abs(xAtual - xAntes); continuar = true; }
-    andarilha.style.setProperty("--x", xAtual.toFixed(1) + "px");
-
     // Ela anda enquanto se desloca e para de pé quando a rolagem termina
-    var andando = fase !== distancia || Math.abs(alvoX - xAtual) > 2;
+    var andando = fase !== distancia;
 
     // Para onde olhar
-    var dx = xAtual - xAntes;
     if (Math.abs(dx) > 0.4) {
       olhar(dx > 0 ? 1 : -1);
     } else if (!andando && ativo && !mqMovel.matches) {
@@ -295,26 +290,6 @@
     }
 
     if (continuar) agendar();
-  }
-
-  /* ---------------- Mini-mapa: Floriano → Campina Grande ---------------- */
-
-  var mapaTrilho = mapaPonto.parentNode;
-
-  function atualizarMapa(y) {
-    var fim = Math.max(1, alturaDoc - vh);
-    var s = clamp(y / fim, 0, 1);
-    var p = s;
-    if (secMala) {
-      var rm = secMala.getBoundingClientRect();
-      var sTopo = clamp((rm.top + y - vh * ALTURA_REBECA) / fim, 0.01, 0.99);
-      var sBase = clamp((rm.bottom + y - vh * ALTURA_REBECA) / fim, sTopo + 0.01, 1);
-      if (s < sTopo) p = 0.4 * s / sTopo;
-      else if (s < sBase) p = 0.4 + 0.2 * (s - sTopo) / (sBase - sTopo);
-      else p = 0.6 + 0.4 * (s - sBase) / (1 - sBase);
-    }
-    var curso = mapaTrilho.clientWidth - mapaPonto.offsetWidth;
-    mapaPonto.style.transform = "translateX(" + (p * curso).toFixed(1) + "px)";
   }
 
   /* ---------------- Easter egg: clique na Rebeca ---------------- */

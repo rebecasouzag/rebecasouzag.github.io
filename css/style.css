@@ -47,7 +47,6 @@
   --celula: 90px;            /* largura de uma célula do sprite na tela (desktop) */
   --coluna: 1100px;
   --margem: 24px;
-  --mapa-altura: 52px;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -62,7 +61,6 @@ body {
   font-family: var(--texto);
   font-size: 1.0625rem;
   line-height: 1.55;
-  padding-top: var(--mapa-altura);
   overflow-x: hidden;
 }
 
@@ -72,7 +70,7 @@ h1, h2, h3 {
   margin: 0 0 .5rem;
   color: var(--tinta);
 }
-h1 { font-size: clamp(1.6rem, 1.1rem + 2.2vw, 2.5rem); }
+h1 { font-size: clamp(1.25rem, 1rem + 1vw, 1.6rem); }
 h2 { font-size: clamp(1.35rem, 1.1rem + 1vw, 1.8rem); color: var(--roxo); }
 h3 { font-size: 1.15rem; }
 p { margin: 0 0 .9rem; }
@@ -102,7 +100,7 @@ button { font: inherit; color: inherit; }
   background: var(--papel-claro); border: var(--traco) solid var(--tinta);
   border-radius: 12px; box-shadow: var(--sombra-leve);
 }
-.pular:focus { top: calc(var(--mapa-altura) + .5rem); }
+.pular:focus { top: .5rem; }
 
 /* Marcadores [PREENCHER] */
 mark.todo {
@@ -115,42 +113,16 @@ mark.todo {
   -webkit-box-decoration-break: clone;
 }
 
-/* ---------- Mini-mapa (barra de progresso) ---------- */
-.mapa {
-  position: fixed; inset: 0 0 auto 0;
-  z-index: 40;
-  height: var(--mapa-altura);
-  display: flex; align-items: center; gap: .75rem;
-  padding: 0 var(--margem);
-  background: var(--papel);
-  border-bottom: var(--traco) solid var(--tinta);
-  font-family: var(--titulo);
-  font-size: .85rem;
-}
-.mapa__cidade { white-space: nowrap; }
-.mapa__trilho {
-  position: relative; flex: 1; height: 0;
-  border-top: 2px dashed var(--tinta);
-}
-.mapa__ponto {
-  position: absolute; left: 0; top: -9px;
-  width: 16px; height: 16px;
-  background: var(--roxo);
-  border: 2px solid var(--tinta);
-  border-radius: 50%;
-  box-shadow: 2px 2px 0 var(--tinta);
-  will-change: transform;
-}
-
 /* ---------- Rebeca que caminha ---------- */
 .andarilha {
   --x: 0px;
   --sobe: 0px;
   --escala: 1;
   position: fixed;
-  left: 0; top: 55vh;
+  left: 0; top: 64vh;
   z-index: 30;
-  transform: translate(var(--x), calc(-50% + var(--sobe))) scale(var(--escala));
+  transform: translate(var(--x), calc(-100% + 4px + var(--sobe))) scale(var(--escala));
+  transform-origin: 50% 100%;
   will-change: transform;
   pointer-events: none;
 }
@@ -254,12 +226,10 @@ main {
 }
 
 .capitulo {
-  padding: clamp(5rem, 14vh, 9rem) 0;
+  padding: clamp(6rem, 20vh, 12rem) 0;
 }
 .capitulo--abertura {
-  min-height: calc(100vh - var(--mapa-altura));
-  display: flex; align-items: center;
-  padding: 2rem 0;
+  padding: clamp(3rem, 10vh, 6rem) 0 clamp(4rem, 12vh, 7rem);
 }
 
 .quadrinho {
@@ -273,7 +243,7 @@ main {
   box-shadow: var(--sombra);
   transition: transform .4s cubic-bezier(.2, .8, .3, 1.2), opacity .4s ease;
 }
-.quadrinho + .quadrinho { margin-top: clamp(4rem, 12vh, 7rem); }
+.quadrinho + .quadrinho { margin-top: clamp(9rem, 30vh, 16rem); }
 .quadrinho--dir { margin-left: auto; }
 .quadrinho--esq { margin-right: auto; }
 .quadrinho--largo { width: min(760px, 78%); }
@@ -283,6 +253,29 @@ main {
   border: 0; box-shadow: none;
   padding: 0;
 }
+
+.quadrinho--abertura .dialogo { margin-bottom: 1.4rem; }
+.quadrinho--abertura .avatar { width: 76px; height: 76px; }
+.quadrinho--abertura .balao {
+  font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.1rem);
+  padding: .8rem 1.4rem;
+}
+.interesses {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: flex; flex-wrap: wrap; gap: .5rem .6rem;
+}
+.interesses li {
+  padding: .3rem .8rem;
+  background: var(--papel-claro);
+  border: 2px solid var(--tinta);
+  border-radius: 14px 18px 15px 19px / 18px 14px 19px 15px;
+  box-shadow: 2px 2px 0 var(--tinta);
+  font-family: var(--titulo);
+  font-size: .9rem;
+}
+.interesses li:first-child { background: var(--roxo); color: var(--papel-claro); }
 
 /* Quadrinhos ainda não visitados ficam "apagados" (só com JS) */
 .js .quadrinho:not(.quadrinho--abertura):not(.quadrinho--visto) {
@@ -520,22 +513,21 @@ main {
   :root {
     --celula: 56px;
     --margem: 16px;
-    --mapa-altura: 46px;
   }
   body { font-size: 1rem; }
-  .mapa { gap: .5rem; font-size: .75rem; }
 
   main { padding-left: 74px; }
   .rebeca__alt { height: calc(var(--celula) * 1.45); }
   .capitulo { padding: 3.5rem 0; }
-  .capitulo--abertura { min-height: calc(100svh - var(--mapa-altura)); }
+  .capitulo--abertura { padding: 2.5rem 0 3rem; }
+  .quadrinho--abertura .avatar { width: 60px; height: 60px; }
 
   .quadrinho, .quadrinho--largo, .quadrinho--abertura {
     width: 100%;
     padding: 1.2rem 1.1rem 1rem;
   }
   .quadrinho--abertura { padding: 0; }
-  .quadrinho + .quadrinho { margin-top: 3.5rem; }
+  .quadrinho + .quadrinho { margin-top: 4rem; }
 
   .pose, .pose--canto, .pose--canto-baixo {
     float: none;
